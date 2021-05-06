@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'dart:convert';
 import './home_card.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -7,7 +9,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<String> names = ["Rohit", "Anna", "Ema"];
+  List data;
+
+  @override
+  void initState() {
+    super.initState();
+    this.getUsersData();
+  }
 
   void handlePopupMenuClick(String item) {
     switch (item) {
@@ -20,9 +28,20 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  void getUsersData({int page = 0}) async {
+    var response = await get(
+        Uri.parse('https://gorest.co.in/public-api/users?page=$page'));
+
+    setState(() {
+      var jsonData = json.decode(response.body);
+      data = jsonData['data'];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
         title: Text('GoRest Demo'),
       ),
@@ -32,13 +51,24 @@ class _HomeScreenState extends State<HomeScreen> {
           print('fab clicked');
         },
       ),
-      body: ListView.builder(
-        padding: EdgeInsets.only(top: 8, bottom: 8),
-        itemCount: names.length,
-        itemBuilder: (BuildContext context, int i) {
-          return HomeCard(handlePopupMenuClick);
-        },
-      ),
+      body: (data == null)
+          ? Center(child: CircularProgressIndicator())
+          : ListView.builder(
+              padding: EdgeInsets.only(top: 8, bottom: 8),
+              itemCount: data.length,
+              itemBuilder: (BuildContext context, int i) {
+                return HomeCard(
+                  userId: data.elementAt(i)['id'],
+                  userEmail: data.elementAt(i)['email'],
+                  userName: data.elementAt(i)['name'],
+                  gender: data.elementAt(i)['gender'],
+                  status: data.elementAt(i)['status'],
+                  createdAt: data.elementAt(i)['created_at'],
+                  updateAt: data.elementAt(i)['updated_at'],
+                  handlePopupMenuClick: handlePopupMenuClick,
+                );
+              },
+            ),
     );
   }
 }

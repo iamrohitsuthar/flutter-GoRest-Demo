@@ -1,9 +1,24 @@
 import 'package:flutter/material.dart';
 
 class HomeCard extends StatelessWidget {
+  final int userId;
+  final String userName;
+  final String userEmail;
+  final String gender;
+  final String status;
+  final String createdAt;
+  final String updateAt;
   final Function handlePopupMenuClick;
 
-  HomeCard(this.handlePopupMenuClick);
+  HomeCard(
+      {this.userId,
+      this.userEmail,
+      this.userName,
+      this.gender,
+      this.status,
+      this.createdAt,
+      this.updateAt,
+      this.handlePopupMenuClick});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +34,7 @@ class HomeCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '#1890',
+                  '#$userId',
                   style: TextStyle(
                       fontFamily: 'Poppins',
                       fontWeight: FontWeight.w400,
@@ -49,7 +64,7 @@ class HomeCard extends StatelessWidget {
             Container(
               transform: Matrix4.translationValues(0.0, -10.0, 0.0),
               child: Text(
-                'Alden Cantreel',
+                userName,
                 style: TextStyle(
                     fontFamily: 'Poppins',
                     fontWeight: FontWeight.w500,
@@ -60,7 +75,7 @@ class HomeCard extends StatelessWidget {
             Container(
               transform: Matrix4.translationValues(0.0, -10.0, 0.0),
               child: Text(
-                'aldencanreel@gmail.com',
+                userEmail,
                 style: TextStyle(
                     fontFamily: 'Poppins',
                     fontWeight: FontWeight.w500,
@@ -79,7 +94,7 @@ class HomeCard extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        'Male',
+                        gender,
                         style: TextStyle(
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w500,
@@ -95,7 +110,7 @@ class HomeCard extends StatelessWidget {
                             fontSize: 16),
                       ),
                       Text(
-                        'Active',
+                        status,
                         style: TextStyle(
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w500,
