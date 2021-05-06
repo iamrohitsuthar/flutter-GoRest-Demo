@@ -133,7 +133,7 @@ class HomeCard extends StatelessWidget {
                                 fontSize: 12),
                           ),
                           Text(
-                            '2021-05-02',
+                            createdAt,
                             style: TextStyle(
                                 fontFamily: 'Poppins',
                                 fontWeight: FontWeight.w400,
@@ -153,7 +153,7 @@ class HomeCard extends StatelessWidget {
                                 fontSize: 12),
                           ),
                           Text(
-                            '2021-05-02',
+                            updateAt,
                             style: TextStyle(
                                 fontFamily: 'Poppins',
                                 fontWeight: FontWeight.w400,

@@ -63,8 +63,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   userName: data.elementAt(i)['name'],
                   gender: data.elementAt(i)['gender'],
                   status: data.elementAt(i)['status'],
-                  createdAt: data.elementAt(i)['created_at'],
-                  updateAt: data.elementAt(i)['updated_at'],
+                  createdAt: data.elementAt(i)['created_at'].substring(
+                      0, data.elementAt(i)['created_at'].indexOf('T')),
+                  updateAt: data.elementAt(i)['updated_at'].substring(
+                      0, data.elementAt(i)['updated_at'].indexOf('T')),
                   handlePopupMenuClick: handlePopupMenuClick,
                 );
               },
