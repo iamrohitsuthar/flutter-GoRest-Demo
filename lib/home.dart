@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
 import './home_card.dart';
+import './add_user.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -48,7 +49,10 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
-          print('fab clicked');
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddUser()),
+          );
         },
       ),
       body: (data == null)
