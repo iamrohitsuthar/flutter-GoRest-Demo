@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # gorest_demo
 
 A new Flutter project.
@@ -15,6 +14,3 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
-=======
-# flutter-GoRest-Demo
->>>>>>> 6757a750f9308dd4f9f60a44923c984b7bccd35f
