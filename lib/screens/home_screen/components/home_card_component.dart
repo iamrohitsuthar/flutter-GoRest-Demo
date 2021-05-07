@@ -3,9 +3,21 @@ import '../../../models/user.dart';
 
 class HomeCardComponent extends StatelessWidget {
   final User user;
-  final Function handlePopupMenuClick;
+  final Function deleteUser;
 
-  HomeCardComponent({this.user, this.handlePopupMenuClick});
+  HomeCardComponent({this.user, this.deleteUser});
+
+  void handlePopupMenuClick(String item) {
+    switch (item) {
+      case 'Edit':
+        print('Edit Clicked: ${user.id}');
+        break;
+      case 'Delete':
+        print('Delete Clicked: ${user.id}');
+        deleteUser(user.id);
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -60,6 +60,8 @@ class _AddUserScreenState extends State<AddUserScreen> {
     } else {
       Fluttertoast.showToast(
         msg: "Something went wrong",
+        backgroundColor: Colors.red.shade400,
+        textColor: Colors.white,
       );
     }
   }

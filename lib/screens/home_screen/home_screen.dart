@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:fluttertoast/fluttertoast.dart';
+
 import 'dart:convert';
-import 'components/home_card_component.dart';
+
+import './components/home_card_component.dart';
 import '../add_user_screen/add_user_screen.dart';
 import '../../models/user.dart';
+import '../../config/config.dart';
+import '../../components/progress_dialog.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -12,6 +17,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<User> data;
+  BuildContext context;
 
   @override
   void initState() {
@@ -20,14 +26,39 @@ class _HomeScreenState extends State<HomeScreen> {
     this.getUsersData();
   }
 
-  void handlePopupMenuClick(String item) {
-    switch (item) {
-      case 'Edit':
-        print('Edit Clicked');
-        break;
-      case 'Delete':
-        print('Delete Clicked');
-        break;
+  void deleteUser(int userid) async {
+    print('delete request: $userid');
+    buildShowDialog(context); // show progress dialog
+
+    var response = await http.delete(
+      Uri.parse('https://gorest.co.in/public-api/users/$userid'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $GOREST_API_TOKEN",
+      },
+    );
+    var jsonResponse = json.decode(response.body);
+    Navigator.of(context).pop(); // hide progress dialog
+    if (jsonResponse['code'] == 204) {
+      Fluttertoast.showToast(
+        msg: "User deleted successfully",
+        backgroundColor: Colors.green.shade400,
+        textColor: Colors.black87,
+      );
+      setState(() {
+        for (int i = 0; i < data.length; i++) {
+          if (data.elementAt(i).id == userid) {
+            data.removeAt(i);
+            break;
+          }
+        }
+      });
+    } else {
+      Fluttertoast.showToast(
+        msg: "Something went wrong",
+        backgroundColor: Colors.red.shade400,
+        textColor: Colors.white,
+      );
     }
   }
 
@@ -54,13 +85,12 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         );
       });
-
-      //data = jsonData['data'];
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    this.context = context;
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
@@ -83,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
               itemBuilder: (BuildContext context, int i) {
                 return HomeCardComponent(
                   user: data.elementAt(i),
-                  handlePopupMenuClick: handlePopupMenuClick,
+                  deleteUser: deleteUser,
                 );
               },
             ),
