@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
       });
     } else {
       Fluttertoast.showToast(
-        msg: "Something went wrong",
+        msg: "Something went wrong!",
         backgroundColor: Colors.red.shade400,
         textColor: Colors.white,
       );
