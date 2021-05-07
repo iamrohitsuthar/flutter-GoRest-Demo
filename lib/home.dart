@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 import 'dart:convert';
 import './home_card.dart';
 import './add_user.dart';
@@ -30,8 +30,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void getUsersData({int page = 0}) async {
-    var response = await get(
-        Uri.parse('https://gorest.co.in/public-api/users?page=$page'));
+    var response = await http
+        .get(Uri.parse('https://gorest.co.in/public-api/users?page=$page'));
 
     setState(() {
       var jsonData = json.decode(response.body);

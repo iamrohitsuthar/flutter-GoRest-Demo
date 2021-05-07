@@ -1,0 +1,1 @@
+const GOREST_API_TOKEN = "YOUR_API_TOKEN";
