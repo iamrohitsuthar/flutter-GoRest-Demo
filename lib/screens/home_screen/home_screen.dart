@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import './home_card.dart';
-import './add_user.dart';
+import 'components/home_card_component.dart';
+import '../add_user_screen/add_user_screen.dart';
+import '../../models/user.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -10,11 +11,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List data;
+  List<User> data;
 
   @override
   void initState() {
     super.initState();
+    data = [];
     this.getUsersData();
   }
 
@@ -34,8 +36,26 @@ class _HomeScreenState extends State<HomeScreen> {
         .get(Uri.parse('https://gorest.co.in/public-api/users?page=$page'));
 
     setState(() {
-      var jsonData = json.decode(response.body);
-      data = jsonData['data'];
+      Map<String, dynamic> jsonData = json.decode(response.body);
+
+      List<dynamic> users = jsonData['data'];
+      users.forEach((element) {
+        data.add(
+          User(
+            element['id'],
+            element['name'],
+            element['email'],
+            element['gender'],
+            element['status'],
+            element['created_at']
+                .substring(0, element['created_at'].indexOf('T')),
+            element['updated_at']
+                .substring(0, element['created_at'].indexOf('T')),
+          ),
+        );
+      });
+
+      //data = jsonData['data'];
     });
   }
 
@@ -51,26 +71,18 @@ class _HomeScreenState extends State<HomeScreen> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => AddUser()),
+            MaterialPageRoute(builder: (context) => AddUserScreen()),
           );
         },
       ),
-      body: (data == null)
+      body: (data.isEmpty)
           ? Center(child: CircularProgressIndicator())
           : ListView.builder(
               padding: EdgeInsets.only(top: 8, bottom: 8),
               itemCount: data.length,
               itemBuilder: (BuildContext context, int i) {
-                return HomeCard(
-                  userId: data.elementAt(i)['id'],
-                  userEmail: data.elementAt(i)['email'],
-                  userName: data.elementAt(i)['name'],
-                  gender: data.elementAt(i)['gender'],
-                  status: data.elementAt(i)['status'],
-                  createdAt: data.elementAt(i)['created_at'].substring(
-                      0, data.elementAt(i)['created_at'].indexOf('T')),
-                  updateAt: data.elementAt(i)['updated_at'].substring(
-                      0, data.elementAt(i)['updated_at'].indexOf('T')),
+                return HomeCardComponent(
+                  user: data.elementAt(i),
                   handlePopupMenuClick: handlePopupMenuClick,
                 );
               },

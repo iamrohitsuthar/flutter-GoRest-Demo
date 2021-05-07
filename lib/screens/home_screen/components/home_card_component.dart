@@ -1,24 +1,11 @@
 import 'package:flutter/material.dart';
+import '../../../models/user.dart';
 
-class HomeCard extends StatelessWidget {
-  final int userId;
-  final String userName;
-  final String userEmail;
-  final String gender;
-  final String status;
-  final String createdAt;
-  final String updateAt;
+class HomeCardComponent extends StatelessWidget {
+  final User user;
   final Function handlePopupMenuClick;
 
-  HomeCard(
-      {this.userId,
-      this.userEmail,
-      this.userName,
-      this.gender,
-      this.status,
-      this.createdAt,
-      this.updateAt,
-      this.handlePopupMenuClick});
+  HomeCardComponent({this.user, this.handlePopupMenuClick});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +21,7 @@ class HomeCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '#$userId',
+                  '#${user.id}',
                   style: TextStyle(
                       fontFamily: 'Poppins',
                       fontWeight: FontWeight.w400,
@@ -64,7 +51,7 @@ class HomeCard extends StatelessWidget {
             Container(
               transform: Matrix4.translationValues(0.0, -10.0, 0.0),
               child: Text(
-                userName,
+                user.name,
                 style: TextStyle(
                     fontFamily: 'Poppins',
                     fontWeight: FontWeight.w500,
@@ -75,7 +62,7 @@ class HomeCard extends StatelessWidget {
             Container(
               transform: Matrix4.translationValues(0.0, -10.0, 0.0),
               child: Text(
-                userEmail,
+                user.email,
                 style: TextStyle(
                     fontFamily: 'Poppins',
                     fontWeight: FontWeight.w500,
@@ -94,7 +81,7 @@ class HomeCard extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        gender,
+                        user.gender,
                         style: TextStyle(
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w500,
@@ -110,7 +97,7 @@ class HomeCard extends StatelessWidget {
                             fontSize: 16),
                       ),
                       Text(
-                        status,
+                        user.status,
                         style: TextStyle(
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w500,
@@ -133,7 +120,7 @@ class HomeCard extends StatelessWidget {
                                 fontSize: 12),
                           ),
                           Text(
-                            createdAt,
+                            user.createdAt,
                             style: TextStyle(
                                 fontFamily: 'Poppins',
                                 fontWeight: FontWeight.w400,
@@ -153,7 +140,7 @@ class HomeCard extends StatelessWidget {
                                 fontSize: 12),
                           ),
                           Text(
-                            updateAt,
+                            user.updatedAt,
                             style: TextStyle(
                                 fontFamily: 'Poppins',
                                 fontWeight: FontWeight.w400,
