@@ -95,6 +95,12 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
         title: Text('GoRest Demo'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.filter_alt),
+            onPressed: () {},
+          )
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
